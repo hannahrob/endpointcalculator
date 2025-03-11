@@ -1,11 +1,14 @@
 package com.stanbic.simple_calculator.app;
 
+import com.stanbic.simple_calculator.app.dtos.Characters;
 import com.stanbic.simple_calculator.app.dtos.FxCurrency;
 import com.stanbic.simple_calculator.app.dtos.SumTwoNumbers;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Currency;
+import java.util.List;
 
 @RestController
 @RequestMapping("/calculator")
@@ -28,10 +31,10 @@ public class CalculatorController {
         return max;
     }
 
-    @GetMapping ("/factorial/{number}")
+    @GetMapping("/factorial/{number}")
     public Integer factorial(@PathVariable Integer number) {
         int factorial = 1;
-        for (int i = 1; i <= number; i++){
+        for (int i = 1; i <= number; i++) {
             factorial *= i;
         }
         return factorial;
@@ -80,13 +83,74 @@ public class CalculatorController {
     }
 
     @PostMapping("/palindrome")
-    public static boolean isPalindrome(@RequestBody String input){
+    public static String isPalindrome(@RequestBody String input) {
         input = input.toLowerCase();
         String rev = "";
         for (int i = input.length() - 1; i >= 0; i--) {
             rev = rev + input.charAt(i);
         }
+        boolean res = rev.equalsIgnoreCase(input);
+        if (res) {
+            return (input + " is a palindrome");
+        } else {
+            return (input + " is not a palindrome");
+        }
     }
+
+    @PostMapping("/true-palindrome")
+    public static String truePalindrome(@RequestBody String input) {
+        input = input.toLowerCase();
+        String rev = "";
+        String noSymbolInput = "";
+        String validChars = "1234567890qwertyuiopasdfghjklzxcvbnm";
+
+        for (int i = input.length() - 1; i >= 0; i--) {
+            if (validChars.contains(String.valueOf(input.charAt(i)))){
+                rev += input.charAt(i);
+            }
+        }
+        for (int i = 0; i >= input.length() - 1; i++) {
+            if (validChars.contains(String.valueOf(input.charAt(i)))) {
+                noSymbolInput += input.charAt(i);
+            }
+        }
+        boolean same = rev.equalsIgnoreCase(noSymbolInput);
+        if (same) {
+            return (input + " is a palindrome");
+        }
+        return (input + " is not a palindrome");
     }
+
+    @GetMapping("/divisors/{number}")
+    public List<Integer> divisors(@PathVariable Integer number) {
+        ArrayList<Integer> divisors = new ArrayList<>();
+        for (int i = 2; i <= number ; i++) {
+            if (number % i == 0) {
+                divisors.add(i);
+            }
+        }
+        return (divisors);
+    }
+
+//    @PostMapping("/split-character")
+//    public List<String> character(@RequestBody Characters split){
+//        for( int i = 0; i <= split.getSplitCharacter() - 1; i++)
+//        {
+//
+//        }
+//    }
+//    @PostMapping("/cube")
+//    public List<Integer> findCube(@RequestBody ArrayList<Integer> integers) {
+//        List<Integer> cubes = new ArrayList<>();
+//        for()
+
+
+
+
+}
+
+
+
+
 
 
