@@ -19,11 +19,4 @@ public class Characters {
         return splitCharacter;
     }
 
-    public void setLetter(String letter) {
-        this.letter = letter;
-    }
-
-    public void setSplitCharacter(String splitCharacter) {
-        this.splitCharacter = splitCharacter;
-    }
 }

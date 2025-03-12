@@ -5,10 +5,8 @@ import com.stanbic.simple_calculator.app.dtos.FxCurrency;
 import com.stanbic.simple_calculator.app.dtos.SumTwoNumbers;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Currency;
-import java.util.List;
+import java.util.*;
+
 
 @RestController
 @RequestMapping("/calculator")
@@ -105,7 +103,7 @@ public class CalculatorController {
         String validChars = "1234567890qwertyuiopasdfghjklzxcvbnm";
 
         for (int i = input.length() - 1; i >= 0; i--) {
-            if (validChars.contains(String.valueOf(input.charAt(i)))){
+            if (validChars.contains(String.valueOf(input.charAt(i)))) {
                 rev += input.charAt(i);
             }
         }
@@ -124,7 +122,7 @@ public class CalculatorController {
     @GetMapping("/divisors/{number}")
     public List<Integer> divisors(@PathVariable Integer number) {
         ArrayList<Integer> divisors = new ArrayList<>();
-        for (int i = 2; i <= number ; i++) {
+        for (int i = 2; i <= number; i++) {
             if (number % i == 0) {
                 divisors.add(i);
             }
@@ -132,21 +130,30 @@ public class CalculatorController {
         return (divisors);
     }
 
-//    @PostMapping("/split-character")
-//    public List<String> character(@RequestBody Characters split){
-//        for( int i = 0; i <= split.getSplitCharacter() - 1; i++)
-//        {
-//
-//        }
-//    }
-//    @PostMapping("/cube")
-//    public List<Integer> findCube(@RequestBody ArrayList<Integer> integers) {
-//        List<Integer> cubes = new ArrayList<>();
-//        for()
+        @PostMapping("/split-character")
+    public List<String> character(@RequestBody Characters splitting){
+            String [] ss = splitting.getLetter().split(splitting.getSplitCharacter());
+            return Collections.singletonList((Arrays.toString(ss)));
+        }
 
+    @PostMapping("/cube")
+    public List<Integer> findCube(@RequestBody ArrayList<Integer> integers) {
+        List<Integer> cubes = new ArrayList<>();
+        for (Integer numbers : integers) {
+            cubes.add(numbers * numbers * numbers);
+        }
+        return cubes;
+    }
 
-
-
+    @PostMapping("/circumference")
+    public List<Float> findCircumference(@RequestBody ArrayList<Float> circleRadiiInMetres) {
+        List<Float> circumference = new ArrayList<>();
+        final Float PI = 3.142F;
+        for (Float numbers : circleRadiiInMetres) {
+            circumference.add((Float)(2 * PI * numbers));
+        }
+        return circumference;
+    }
 }
 
 
